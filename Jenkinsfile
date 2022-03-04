@@ -4,6 +4,10 @@ pipeline {
      yamlFile 'k8s/jenkins-pod.yaml'
     }
   }
+  environment {
+        REPO = 'azureacr1dzenancin.azurecr.io'
+    }
+
   stages {
     stage('Build') {
       steps {
@@ -16,8 +20,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         container('docker') {
-          sh "docker build -t azureacr1dzenancin.azurecr.io/app:dev ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container,
-          sh "docker push azureacr1dzenancin.azurecr.io/app:dev"        // which is just connecting to the host docker deaemon
+          sh "/kaniko/executor --context `pwd` --destination ${REPO}/app:1.0"
         }
       }
     }
