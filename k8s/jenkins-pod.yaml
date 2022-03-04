@@ -20,5 +20,5 @@ spec:
         periodSeconds: 10
         timeoutSeconds: 25
     - name: docker
-      image: docker
+      image: gcr.io/kaniko-project/executor:debug
       command: ["tail", "-f", "/dev/null"]
