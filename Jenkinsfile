@@ -5,10 +5,21 @@ pipeline {
     }
   }
   environment {
+
         REPO = 'azureacr1dzenancin.azurecr.io'
+        AZURE_CLIENT_ID = credentials('jenkins-azure-client-id')
+        AZURE_CLIENT_SECRET = credentials('jenkins-azure-client-secret')
+        AZURE_TENANT_ID = credentials('jenkins-azure-tenant-id')
     }
 
   stages {
+
+    stage('First') {
+      steps {
+         sh "kubectl get pods"
+        }
+    }
+
     stage('Build') {
       steps {
        container('node'){// no container directive is needed as the maven container is the default
