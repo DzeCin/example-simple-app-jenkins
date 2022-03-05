@@ -14,12 +14,6 @@ pipeline {
 
   stages {
 
-    stage('First') {
-      steps {
-         sh "kubectl get pods"
-        }
-    }
-
     stage('Build') {
       steps {
        container('node'){// no container directive is needed as the maven container is the default
