@@ -25,7 +25,7 @@ spec:
       volumeMounts:
         - name: docker-config
           mountPath: /kaniko/.docker/
-  volume:
+  volumes:
     - name: docker-config
-        configMap:
+      configMap:
           name: docker-config
