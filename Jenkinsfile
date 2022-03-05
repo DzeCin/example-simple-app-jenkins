@@ -17,14 +17,16 @@ pipeline {
     stage('Build') {
       steps {
        container('node'){// no container directive is needed as the maven container is the default
-       sh "npm install"
+        sh "npm install"
         sh "ng build --prod --output-path=./build"
+        sh "ls"
         }
       }
     }
     stage('Build Docker Image') {
       steps {
         container('docker') {
+          sh "ls"
           sh "/kaniko/executor --context `pwd` --destination ${REPO}/app:1.0"
         }
       }

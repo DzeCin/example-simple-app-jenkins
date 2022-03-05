@@ -21,4 +21,11 @@ spec:
         timeoutSeconds: 25
     - name: docker
       image: gcr.io/kaniko-project/executor:debug
-      command: ['sh', '-c', "echo { \"credsStore\": \"acr\" } > /kaniko/.docker/config.json && tail -f /dev/null"]
+      command: ["sh", "-c", "tail -f /dev/null"]
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker/
+  volume:
+    - name: docker-config
+        configMap:
+          name: docker-config
