@@ -23,6 +23,8 @@ pipeline {
         }
       }
     }
+
+
     stage('Build Docker Image') {
       steps {
         container('docker') {
@@ -31,5 +33,16 @@ pipeline {
         }
       }
     }
+
+    stage('Kubectl test') {
+      steps {
+        container('kubectl') {
+          withKubeConfig([credentialsId: 'deployment-sa', serverUrl: 'https://test-0140002d.hcp.westeurope.azmk8s.io:443']) {
+             sh 'kubectl get pods -A'
+          }
+        }
+      }
+    }
+
   }
 }
