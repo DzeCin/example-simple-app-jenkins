@@ -21,11 +21,11 @@ spec:
         timeoutSeconds: 25
     - name: docker
       image: gcr.io/kaniko-project/executor:debug
-      command: ["sh", "-c", "tail -f /dev/null"]
-      volumeMounts:
-        - name: docker-config
-          mountPath: /kaniko/.docker/
-  volumes:
-    - name: docker-config
-      configMap:
-          name: docker-config
+      command: ["sh", "-c", "printf '{ \"credHelpers\": {\"azureacr1dzenancin.azurecr.io\": \"acr\"} }' > /kaniko/.docker/config.json && tail -f /dev/null"]
+#      volumeMounts:
+#        - name: docker-config
+#          mountPath: /kaniko/.docker/
+#  volumes:
+#    - name: docker-config
+#      configMap:
+#          name: docker-config
