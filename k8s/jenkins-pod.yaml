@@ -4,6 +4,9 @@ metadata:
   name: jjjj
 spec:
   containers:
+    - name: kubectl
+      image: bitnami/kubectl
+      command: ["sh", "-c", "tail -f /dev/null"]
     - name: node
       image: node:14.19-alpine
       command: ["sh" , "-c" , "npm install -g @angular/cli && tail -f /dev/null"]
