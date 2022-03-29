@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: kubectl
+      image: portainer/kubectl-shell
+      command: ["sh", "-c", "tail -f /dev/null"]
+      serviceAccountName: deployment
+    - name: node
+      image: node:14.19-alpine
+      command: ["sh" , "-c" , "npm install -g @angular/cli && tail -f /dev/null"]
+      resources:
+        requests:
+          memory: "0.5Gi"
+          cpu: "500m"
+        limits:
+          memory: "8Gi"
+      readinessProbe:
+        exec:
+          command: ["sh", "-c" , "ng v"]
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        timeoutSeconds: 25
+    - name: docker
+      image: gcr.io/kaniko-project/executor:debug
+      command: ["sh", "-c", "printf '{ \"credHelpers\": {\"azureacr1dzenancin.azurecr.io\": \"acr\"} }' > /kaniko/.docker/config.json && tail -f /dev/null"]
+#      volumeMounts:
+#        - name: docker-config
+#          mountPath: /kaniko/.docker/
+#  volumes:
+#    - name: docker-config
+#      configMap:
+#          name: docker-config
